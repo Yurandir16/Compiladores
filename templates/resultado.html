@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>compiladores</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="index.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bellefair&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <title>Document</title>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython.min.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython_stdlib.js">
+    </script>
+
+    <style type="text/css">
+        #texto {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+
+        #texto.aparece {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #texto.oculta {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        #spacer {
+            height: 2000px;
+        }
+
+
+        .text-roboto {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .size-25 {
+            font-size: 25px;
+        }
+
+        .size-28 {
+            font-size: 28px;
+        }
+
+        .size-104 {
+            font-size: 104px;
+        }
+
+        .yellow {
+            color: #f1f1f1;
+        }
+
+
+        #texto {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+        }
+
+        #texto.aparece {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #spacer {
+            height: 2000px;
+            padding-bottom: 1000px;
+        }
+        .box {
+            height: 25rem;
+            width: 100%;
+            border: 2px solid black;
+            border-style: dashed;
+        }
+        .center-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .size-104 {
+                font-size: 64px;
+            }
+            
+            .container-fluid {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-secondary">
+    <div class="position-relative">
+        <div class="position-absolute top-0 start-0">
+            <img src="{{ url_for('static', filename='../../../static/images/resultado.jpeg ') }}" alt="descripcion_de_la_imagen" class="img-fluid" style="height: 100vh; width: 100vw;">
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid position-relative" style="z-index: 1;">
+        <h1 class="tex">Resultado</h1>
+        {% if encontrado %}
+        <table class="table table-bordered border-primary">
+            <thead>
+                <tr>
+                    <th>Clave</th>
+                    <th>Nombre Contacto</th>
+                    <th>Correo</th>
+                    <th>Teléfono Contacto</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contacto in encontrado %}
+                <tr>
+                    <td>{{ contacto['Clave'] }}</td>
+                    <td>{{ contacto['Nombre Contacto'] }}</td>
+                    <td>{{ contacto['Correo'] }}</td>
+                    <td>{{ contacto['Teléfono Contacto'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No se encontraron datos</p>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <br>
+</body>
+
+<script>
+    let scrollPos = 0;
+    const elemento = document.getElementById('texto');
+
+    window.addEventListener('scroll', function () {
+        const distancia = elemento.getBoundingClientRect().top;
+        const altura = window.innerHeight;
+
+        // Detecta la dirección del desplazamiento
+        const currentScrollPos = window.pageYOffset;
+        if (currentScrollPos > scrollPos) {
+            // Desplazamiento hacia abajo
+            elemento.classList.remove('oculta');
+            elemento.classList.add('aparece');
+        } else {
+            // Desplazamiento hacia arriba
+            elemento.classList.remove('aparece');
+            elemento.classList.add('oculta');
+        }
+        scrollPos = currentScrollPos;
+
+        // Muestra el elemento si está dentro de la pantalla
+        if (distancia < altura) {
+            elemento.classList.add('aparece');
+            elemento.classList.remove('oculta');
+        }
+    });
+</script>
+
+</html>
